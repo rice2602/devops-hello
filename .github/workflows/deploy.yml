@@ -27,4 +27,5 @@ jobs:
 
     - name: Build and run containers
       run:  |
+        cd week5
         docker-compose up --build -d
