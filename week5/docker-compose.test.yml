@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: test.Dockerfile
+    depends_on:
+      - redis
+    environment:
+      - PYTHONPATH=/app
+  redis:
+    image: redis:7-alpine
