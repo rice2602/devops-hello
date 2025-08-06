@@ -1,0 +1,7 @@
+services:
+  web:
+    image: rice2602/week5-web:latest
+    ports:
+      - "5000:5000"
+  redis:
+    image: redis:alpine

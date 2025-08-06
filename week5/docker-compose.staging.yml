@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  web:
+    image: rice2602/week5-web:staging
+    command: python app.py
+    ports:
+      - "5001:5000"
+
+
+  redis:
+    image: redis:7-alpine
