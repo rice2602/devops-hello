@@ -1,4 +1,4 @@
 flask
 redis
 pytest
-
+psycopg2-binary

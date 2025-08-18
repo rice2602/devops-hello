@@ -1,12 +1,45 @@
-version: '3.8'
-
 services:
   web:
     build: .
     ports:
       - "5000:5000"
+
+    environment:
+      - PGUSER=user
+      - PGPASSWORD=pass
+      - PGDATABASE=mydb
+      - PGHOST=db
+      - PGPORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
     depends_on:
       - redis
-
+      - db
   redis:
     image: redis:7
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: mydb
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    command: python -u worker.py
+    depends_on:
+      - redis
+volumes:
+    postgres-data:
